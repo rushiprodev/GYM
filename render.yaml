@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: gym-backend
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn GYM.wsgi:application
+    autoDeploy: true
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        value: rushi$uperSecretKey     # ✅ Use a long random secret in production
+      - key: DEBUG
+        value: False                   # ✅ Always false in production
+      - key: GHL_SECRET
+        value: rushigym123
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gym-db
+          property: connectionString
+
+databases:
+  - name: gym-db
+    plan: free
