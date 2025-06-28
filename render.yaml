@@ -4,13 +4,15 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn GYM.wsgi:application
+    startCommand: |
+      python manage.py migrate &&
+      gunicorn GYM.wsgi:application
     autoDeploy: true
     envVars:
       - key: DJANGO_SECRET_KEY
-        value: rushi$uperSecretKey     # ✅ Use a long random secret in production
+        value: rushi$uperSecretKey
       - key: DEBUG
-        value: False                   # ✅ Always false in production
+        value: False
       - key: GHL_SECRET
         value: rushigym123
       - key: DATABASE_URL
