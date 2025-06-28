@@ -66,8 +66,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GYM.wsgi.application'
 
-# 🔗 Database configuration: SQLite (local) or PostgreSQL (Render)
-if os.getenv("RENDER", "").upper() == "TRUE":
+# 🔗 Database configuration: PostgreSQL (Render) or SQLite (Local)
+if os.getenv("DATABASE_URL"):
     DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
@@ -101,8 +101,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # 🗝 Auto Field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ GHL Secret
+# ✅ GHL Secret for token verification
 GHL_SECRET = os.getenv("GHL_SECRET", "rushigym123")
 
-# 🚀 Render/Heroku deployment settings
+# 🚀 Enable Heroku/Render deployment support
 django_heroku.settings(locals())
