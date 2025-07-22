@@ -1,10 +1,22 @@
 from django.db import models
 
+# Choice options
 GENDER_CHOICES = [('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')]
-YEAR_CHOICES = [('First Year', 'First Year'), ('Second Year', 'Second Year'), ('Third Year', 'Third Year'), ('Final Year', 'Final Year')]
+YEAR_CHOICES = [
+    ('First Year', 'First Year'),
+    ('Second Year', 'Second Year'),
+    ('Third Year', 'Third Year'),
+    ('Final Year', 'Final Year')
+]
 CONTACT_METHOD_CHOICES = [('Phone', 'Phone'), ('Email', 'Email'), ('SMS', 'SMS')]
 GYM_HISTORY_CHOICES = [('Yes', 'Yes'), ('No', 'No')]
-BRANCH_CHOICES = [('First Year', 'First Year'), ('Second Year', 'Second Year'), ('Third Year', 'Third Year'), ('Final Year', 'Final Year'), ('Faculty', 'Faculty')]
+BRANCH_CHOICES = [
+    ('First Year', 'First Year'),
+    ('Second Year', 'Second Year'),
+    ('Third Year', 'Third Year'),
+    ('Final Year', 'Final Year'),
+    ('Faculty', 'Faculty')
+]
 HEALTH_CONDITION_CHOICES = [
     ('High Blood Pressure', 'High Blood Pressure'),
     ('Low Blood Pressure', 'Low Blood Pressure'),
@@ -14,6 +26,7 @@ HEALTH_CONDITION_CHOICES = [
     ('Other', 'Other'),
 ]
 
+# Offline registration model
 class OfflineRegistration(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -27,13 +40,14 @@ class OfflineRegistration(models.Model):
     roll_no = models.CharField(max_length=20)
     department = models.CharField(max_length=100)
     fitness_challenges = models.TextField(blank=True, null=True)
-    gym_member_before = models.CharField(max_length=3, choices=GYM_HISTORY_CHOICES, blank=True)
+    gym_member_before = models.CharField(max_length=10, choices=GYM_HISTORY_CHOICES, blank=True)
     terms_agreed = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} (Offline)"
 
+# Online registration model
 class OnlineRegistration(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -47,13 +61,14 @@ class OnlineRegistration(models.Model):
     roll_no = models.CharField(max_length=20)
     department = models.CharField(max_length=100)
     fitness_challenges = models.TextField(blank=True, null=True)
-    gym_member_before = models.CharField(max_length=3, choices=GYM_HISTORY_CHOICES, blank=True)
+    gym_member_before = models.CharField(max_length=10, choices=GYM_HISTORY_CHOICES, blank=True)
     terms_agreed = models.BooleanField(default=False)
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} (Online)"
 
+# Yoga registration model
 class YogaRegistration(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
