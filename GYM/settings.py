@@ -5,25 +5,25 @@ Django settings for GYM project.
 import os
 from pathlib import Path
 import dj_database_url
-import dotenv
+from dotenv import load_dotenv
 import django_heroku
 
-# 📦 Load environment variables from .env
-dotenv.load_dotenv()
+# Load environment variables
+load_dotenv()
 
-# 📁 Base directory
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 🔐 Secret Key
+# Secret key
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'unsafe-default-key')
 
-# ✅ Debug
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+# Debug mode
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# 🌍 Allowed Hosts
-ALLOWED_HOSTS = ['*']  # Restrict in production
+# Allowed hosts
+ALLOWED_HOSTS = ['*']  # Optional: Replace * with your Render URL in production
 
-# 📦 Installed Apps
+# Installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -34,10 +34,10 @@ INSTALLED_APPS = [
     'registrations',
 ]
 
-# ⚙️ Middleware
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,7 +48,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'GYM.urls'
 
-# 🖼 Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -67,7 +66,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GYM.wsgi.application'
 
-# 🔗 Database
+# Database
 if os.getenv("RENDER", "").upper() == "TRUE":
     DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
@@ -80,9 +79,7 @@ else:
         }
     }
 
-print("🔌 Using DB:", os.environ.get("DATABASE_URL"))  # Debug line
-
-# 🔐 Password validators
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -90,25 +87,26 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# 🌐 Localization
+# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# 🗂 Static files
+# Static files
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# 🗝 Default Auto Field
+# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ✅ GHL Secret
+# GHL secret
 GHL_SECRET = os.getenv("GHL_SECRET", "rushigym123")
 
-# 🚀 Render/Heroku settings
+# Enable Heroku/Render settings
 django_heroku.settings(locals())
+
 
 
 # for dbsqulite go to .env file and render=False
